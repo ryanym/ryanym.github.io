@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Untitled</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on Untitled</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©2020 ryanym</copyright>
+    <lastBuildDate>Tue, 27 Feb 2018 22:04:04 -0500</lastBuildDate>
+    
+        <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>productivity</title>
+      <link>/categories/productivity/</link>
+      <pubDate>Tue, 27 Feb 2018 22:04:04 -0500</pubDate>
+      
+      <guid>/categories/productivity/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
