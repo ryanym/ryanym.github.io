@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Cloud is not free, Wakeup and SSH to your home computer remotely&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.189220655b5bd8476bdd991f58d2d09d004854ee0d35eef15161c384f5f7f56e3a0209e83c44dc818ef22355ae528ef1.css" integrity="sha384-GJIgZVtb2Edr3ZkfWNLQnQBIVO4NNe7xUWHDhPX39W46AgnoPETcgY7yI1WuUo7x">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<body>
+    <div class="base-body"><section id="header" class="site header max-body-width">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content" class="max-body-width"><section class="article header">
+    <h1 class="article title">Cloud is not free, Wakeup and SSH to your home computer remotely</h1><p class="article date">Sunday, March 10, 2019</p></section><article class="article markdown-body"><p><span class="image-container"><span class="link"><a target="_blank" rel="noopener noreferrer" 
+  href="https://cdn-images-1.medium.com/max/1260/1*SNdOlOGAYF6ahI1SG22yVA.jpeg"><img class="img" src="https://cdn-images-1.medium.com/max/1260/1*SNdOlOGAYF6ahI1SG22yVA.jpeg"
+        alt="teepublic"/></a></span></span></p>
+<p>Recently I had to run some <a href="https://medium.com/@kyle.jinhai.li/reinforcement-learning-introduction-to-q-learning-444c951e292c"target="_blank">Q-learning</a> algorithms on my home desktop (running on Ubuntu 18). These workloads, depends on the model and hyper parameters, could take a while to finish. If I’m away from home and still wants to work on this project, my options would be:</p>
+<ul>
+<li>
+<p>Run the algorithms on my Macbook pro and thus starting a fire somewhere</p>
+</li>
+<li>
+<p>Run the algorithms on the cloud, cheapest <a href="https://aws.amazon.com/ec2/pricing/on-demand/"target="_blank">computation optimized instance</a> costs $0.085/hour on AWS</p>
+</li>
+<li>
+<p>SSH into my desktop remotely, and continue my workloads, for free (well, plus the electricity cost)</p>
+</li>
+</ul>
+<p>In the rest of this post I will walk through how I set up my desktop for SSH and WOL(Wakeup On LAN).</p>
+<h1 id="ssh-within-the-same-local-network">SSH within the same local network</h1>
+<ol>
+<li>
+<p>Find the ip of destination machine: run <code>ifconfig</code> and you want to find the interface with your local ip, something like <code>192.168.0.10</code></p>
+</li>
+<li>
+<p>Verify <code>sshd</code> service is running and find the ssh port (default is 22)</p>
+</li>
+<li>
+<p>Test ssh: <code>ssh user@192.168.0.10</code></p>
+</li>
+</ol>
+<h1 id="ssh-from-external-network">SSH from external network</h1>
+<p>In order to access the desktop from external network, we need to:</p>
+<ol>
+<li>
+<p>Find the temporary public ip assigned by the ISP, <code>dig +short myip.opendns.com @resolver1.opendns.com</code> let’s say <code>1.2.3.4</code> is our public ip</p>
+</li>
+<li>
+<p>Now that we have the public ip, can we ssh to our desktop remotely? Well, not yet, our home devices all share the same public ip, this is called <a href="https://en.wikipedia.org/wiki/Network_address_translation"target="_blank">Network Address Translation</a> (NAT). So we need to explicitly tell our router to forward all incoming traffic of a port to a specific local ip and port, this is called Port Forwarding. In our case we need to tell our router to forward all traffic heading to port 22 of our desktop. All routers should have this functionality and this can be setup on the router admin web ui. We need to add a port forwarding rule so that it forwards source port <code>22</code> to destination, our desktop’s ip, <code>192.168.0.10</code>and destination port <code>22.</code></p>
+</li>
+<li>
+<p>Test ssh, <code>ssh user@1.2.3.4</code></p>
+</li>
+<li>
+<p>Tighten up the security. Internet is a dangerous place and we don’t want our machine compromised. In my setup I disabled password authentication and root login, so that the only way to ssh into my desktop is through public key authentication. To disable password authentication, in <code>/etc/ssh/sshd_config</code>, change the following lines to <code>no</code></p>
+</li>
+</ol>
+<pre><code>PermitRootLogin no
+PasswordAuthentication no
+</code></pre><ol start="5">
+<li>
+<p>Before we restart sshd and apply the changes, we need to <a href="https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"target="_blank">create a ssh key pair</a> and copy our public key to user’s <code>authorized_keys</code>: <code>ssh-copy-id user@1.2.3.4</code></p>
+</li>
+<li>
+<p>Now restart sshd on desktop and test ssh again, this time it should not prompt for password.</p>
+</li>
+</ol>
+<h1 id="setting-up-wakeup-on-lan-wol">Setting up Wakeup On LAN (WOL)</h1>
+<p>I set my desktop to suspend after 15mins of idle to save electricity. But the problem is that we can’t ssh back to it after it goes to sleep. The router sees the device is offline and stop forwarding anything to that local ip. Luckily, there is a feature called Wakeup On LAN that’s supported by most motherboards.</p>
+<ol>
+<li>
+<p>This feature is usually disabled by default, we need to <a href="https://www.howtogeek.com/70374/how-to-geek-explains-what-is-wake-on-lan-and-how-do-i-enable-it/"target="_blank">enable it in our BIOS</a></p>
+</li>
+<li>
+<p>Enable WOL with <code>ethtool</code> in the OS level, <code>sudo ethtool -s eth0 wol</code></p>
+</li>
+<li>
+<p>Verify WOL is enabled for our network interface <code>eth0</code>. <code>g</code> indicates wake on Magic Packet is enabled</p>
+</li>
+</ol>
+<pre><code>sudo ethtool eth0
+
+Settings for eth0:
+ 	Supported ports: [ MII ]
+ 	Supported link modes:   10baseT/Half 10baseT/Full
+ 	...
+         ...
+ 	Supports Wake-on: g
+ 	Wake-on: g
+ 	Link detected: yes
+</code></pre><ol start="3">
+<li>Now we need something to send the magic packet, I use <a href="https://github.com/jpoliv/wakeonlan"target="_blank">wakeonlan</a> but there are many alternatives. To send the wake up our desktop, we need the mac address of our desktop network card. This can be found in the output of <code>ifconfig</code> :</li>
+</ol>
+<pre><code>eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.0.10  netmask 255.255.255.0  broadcast 192.168.100.255
+        inet6 fe80::edf:c31e:840e:92ca  prefixlen 64  scopeid 0x20&lt;link&gt;
+       ** **ether** e0:d5:5e:29:28:2b**  txqueuelen 1000  (Ethernet)
+        RX packets 26988  bytes 6051736 (6.0 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 5053  bytes 582242 (582.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 16  memory 0xef200000-ef220000
+</code></pre><p>This tool basically boardcast to all devices under the same network and wakes up the device that matches the mac address</p>
+<ol start="4">
+<li>Suspend the desktop and test WOL from laptop</li>
+</ol>
+<pre><code>wakeonlan e0:d5:5e:29:28:2b
+Sending magic packet to 255.255.255.255:9 with e0:d5:5e:29:28:2b
+</code></pre><p>I can hear my desktop spinning up right after sending this command, we can ssh again! But wait, can we run wakeonlan from an <strong>external network</strong>? How do we wake up the desktop <strong>remotely</strong>?</p>
+<p>Unfortunately most home routers do not support this feature, as the above ARP query only works within the local network. This left us a few options:</p>
+<ul>
+<li>
+<p>Leave the desktop on 24/7 (this might be more expansive than cloud)</p>
+</li>
+<li>
+<p>Running a device with low power consumption 24/7 and use it as a jump host to wake up our desktop</p>
+</li>
+<li>
+<p>Run <a href="https://community.teamviewer.com/t5/Knowledge-Base/How-does-Wake-on-LAN-WOL-with-TeamViewer-work/ta-p/33"target="_blank">Teamviewer WOL</a> if the target computer is connected to the router via a network cable.</p>
+</li>
+</ul>
+<p>Luckily I have a raspberry pi sitting around, we can follow the same steps above to setup port forwarding and ssh. Note that we already used port 22 for our desktop, we need to run sshd on a different port, so that we can ssh into raspi from external network. To do this, change <code>Port 22</code> to <code>Port 2223</code>in <code>/etc/ssh/sshd_config</code> and restart sshd.</p>
+<p>Then setup another port forwarding rule to forward all incoming traffic to port 2223 to raspi’s ip and port 2223</p>
+<ol start="5">
+<li>Test ssh to raspi using our public ip and test wakeonlan from raspi</li>
+</ol>
+<pre><code>ssh piuser@**1.2.3.4** -p 2223
+
+wakeonlan e0:d5:5e:29:28:2b
+Sending magic packet to 255.255.255.255:9 with e0:d5:5e:29:28:2b
+</code></pre><p>Nice, desktop is up again! We can now wake up and ssh into our computer remotely.</p>
+<h1 id="future-enhancement">Future Enhancement</h1>
+<p>Our public ip is not permanent, it could be changed when the DHCP lease is renewed. We can add a cron job on our raspi to commit our public ip to a private git repo if ip is changed.</p>
+</article><section class="article labels"><a class="category" href=/categories/setup/>setup</a><a class="tag" href=/tags/ssh/>ssh</a><a class="tag" href=/tags/cloud/>cloud</a></section><section class="article navigation"><p><a class="link" href="/posts/producitivity-tools/"><span class="li">&rarr;</span>Producitivity Tools</a class="link">
+    </p></section></div><section id="footer" class="footer max-body-width"><div class="footer-wrap">
+    <p class="copyright">©2020 Ryan Ma</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-73966605-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+</div>
+</body>
+
+</html>
