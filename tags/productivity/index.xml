@@ -18,10 +18,9 @@
       <pubDate>Tue, 27 Feb 2018 22:04:04 -0500</pubDate>
       
       <guid>/posts/producitivity-tools/</guid>
-      <description>This blog post is a summary of a team lunch &amp;amp; learn, special thanks to our awesome senior engineers for sharing their knowledge to improve productivity. I will continuously update this post as I learn more, and dedicated blog will be posted if a subject is worth to go in detail
-Wox Wox is a launcher for Windows, similar to Alfred on mac
-link: https://github.com/Wox-launcher/Wox
-byobu Byobu is a open source text-based window manager and terminal multiplexer</description>
+      <description>Updated: 2020-02-01
+This blog post is a summary of a team lunch &amp;amp; learn, special thanks to our awesome senior engineers for sharing their knowledge to improve productivity. I will continuously update this post as I learn more, and dedicated blog will be posted if a subject is worth to go in detail
+Pandocs Pandocs is a universal document converter. It can converts document formats like Markdown, HTML, PDF, LaTex, **Jupyter Notebook **, and even Microsoft Word.</description>
     </item>
     
   </channel>

@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Producitivity Tools&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.189220655b5bd8476bdd991f58d2d09d004854ee0d35eef15161c384f5f7f56e3a0209e83c44dc818ef22355ae528ef1.css" integrity="sha384-GJIgZVtb2Edr3ZkfWNLQnQBIVO4NNe7xUWHDhPX39W46AgnoPETcgY7yI1WuUo7x">
+<meta name="supported-color-schemes" content="light dark"><title>Producitivity Tools&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.100cc93081b13176ec40efca1e644a09b39732c84be99de58100b0d3ddea7c37ef65e1f4311ada7fb94979371e6278af.css" integrity="sha384-EAzJMIGxMXbsQO/KHmRKCbOXMshL6Z3lgQCw093qfDfvZeH0MRraf7lJeTceYniv">
 
 <link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
 <body>
-    <div class="base-body"><section id="header" class="site header max-body-width">
+    <div class="base-body"><section id="header" class="site header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content" class="max-body-width"><section class="article header">
-    <h1 class="article title">Producitivity Tools</h1><p class="article date">Tuesday, February 27, 2018</p></section><article class="article markdown-body"><p>This blog post is a summary of a team lunch &amp; learn, special thanks to our awesome senior engineers for sharing their knowledge to improve productivity. I will continuously update this post as I learn more, and dedicated blog will be posted if a subject is worth to go in detail</p>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content"><section class="article header">
+    <h1 class="article title">Producitivity Tools</h1><p class="article date">Tuesday, February 27, 2018</p></section><article class="article markdown-body"><p>Updated: 2020-02-01</p>
+<p>This blog post is a summary of a team lunch &amp; learn, special thanks to our awesome senior engineers for sharing their knowledge to improve productivity. I will continuously update this post as I learn more, and dedicated blog will be posted if a subject is worth to go in detail</p>
+<h2 id="pandocs">Pandocs</h2>
+<p>Pandocs is a universal document converter. It can converts document formats like <strong>Markdown</strong>, <strong>HTML</strong>, <strong>PDF</strong>, <strong>LaTex</strong>, **Jupyter Notebook **, and even <strong>Microsoft Word</strong>. This comes in handy when you need more granular control on the document and can easily convert it to LaTex, Word or HTML.<br>
+link: <a href="https://pandoc.org/">https://pandoc.org/</a></p>
+<h2 id="typora">Typora</h2>
+<p>Typora is a Markdown editor and reader which provides seamless live preview and many accessibility features like Import &amp; Export to different file formats, Auto Pair and Focus Mode. This blog is written with Typora.<br>
+link: <a href="https://typora.io/">https://typora.io/</a></p>
+<h2 id="kitty">Kitty</h2>
+<p>Kitty is a fast GPU based terminal emulator which has many plugins and is very customizable.<br>
+link: <a href="https://sw.kovidgoyal.net/kitty/#">https://sw.kovidgoyal.net/kitty/#</a></p>
 <h2 id="wox">Wox</h2>
-<p>Wox is a launcher for Windows, similar to Alfred on mac</p>
-<p>link: <a href="https://github.com/Wox-launcher/Wox">https://github.com/Wox-launcher/Wox</a></p>
+<p>Wox is a launcher for Windows, similar to Alfred on MacOS.<br>
+link: <a href="https://github.com/Wox-launcher/Wox">https://github.com/Wox-launcher/Wox</a></p>
 <h2 id="byobu">byobu</h2>
-<p>Byobu is a open source text-based window manager and terminal multiplexer</p>
-<p>link: <a href="http://byobu.co/">http://byobu.co/</a></p>
+<p>Byobu is a open source text-based window manager and terminal multiplexer.<br>
+link: <a href="http://byobu.co/">http://byobu.co/</a></p>
 <h2 id="ssh-config">SSH config</h2>
-<p>SSH config comes in handy when you have to manage tens or hundreds of servers. Some basic functionalities I'm using are Host, User, IdentifyFile, ControlMaster, ControlPath, and Host keyword/wild card matching</p>
-<p>link: <a href="https://www.ssh.com/ssh/config/">https://www.ssh.com/ssh/config/</a></p>
+<p>SSH config comes in handy when you have to manage tens or hundreds of servers. Some basic functionalities I'm using are Host, User, IdentifyFile, ControlMaster, ControlPath, and Host keyword/wild card matching.<br>
+link: <a href="https://www.ssh.com/ssh/config/">https://www.ssh.com/ssh/config/</a></p>
 <h2 id="manage-dotfiles-using-git-without-symlinks">Manage dotfiles using git without symlinks</h2>
 <p>Richard has a great post on this topic <a href="https://richard.gibert.ca/2017-12-19-managing_home_with_git/">https://richard.gibert.ca/2017-12-19-managing_home_with_git/</a>. Basically you need to create a bare repo at $HOME and create alias for git to use $HOME as the work tree</p>
 <h2 id="windows-7-shortcuts">Windows 7 shortcuts</h2>
@@ -25,10 +35,11 @@
 <code>windows + right </code> snaps current window to right half of the screen<br>
 <code>windows + up</code> maximize current window<br>
 <code>windows + down</code> minimize current window<br>
-<code>crtl + alt + arrow keys</code> rotate screen accordingly</p>
+<code>crtl + alt + arrow keys</code> rotate screen accordingly<br>
+<code>crtl + shfit + arrow keys</code> to move current window to different screens</p>
 <h2 id="chrome-extensions">Chrome extensions</h2>
 <h3 id="crx-mouse-gestures">crx Mouse Gestures</h3>
-<p>crx Mouse Gestures enables mouse navigation, useful when browsing github<br>
+<p>crx Mouse Gestures enables mouse navigation, useful when your mouse doesn't have navigation buttons builtin<br>
 link: <a href="https://chrome.google.com/webstore/detail/crxmouse-chrome-gestures/jlgkpaicikihijadgifklkbpdajbkhjo?hl=en">https://chrome.google.com/webstore/detail/crxmouse-chrome-gestures/jlgkpaicikihijadgifklkbpdajbkhjo?hl=en</a></p>
 <h3 id="the-great-suspender">The Great Suspender</h3>
 <p>I like to create new tabs whenever I google something new, The Great Suspender automatically suspend unused tabs to free up system resources<br>
@@ -36,7 +47,7 @@ link:  <a href="https://chrome.google.com/webstore/detail/the-great-suspender/kl
 <h3 id="session-buddy">Session Buddy</h3>
 <p>Chrome tab, bookmark and session manage tool, auto records current sessions. I haven't used this too much, but this might be a great replacement for chrome history<br>
 link:  <a href="https://chrome.google.com/webstore/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko?hl=en">https://chrome.google.com/webstore/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko?hl=en</a></p>
-</article><section class="article labels"><a class="category" href=/categories/productivity/>productivity</a><a class="tag" href=/tags/productivity/>productivity</a></section><section class="article navigation"><p><a class="link" href="/posts/remote-ssh-home-computer/"><span class="li">&larr;</span>Cloud is not free, Wakeup and SSH to your home computer remotely</a></p></section></div><section id="footer" class="footer max-body-width"><div class="footer-wrap">
+</article><section class="article labels"><a class="category" href=/categories/setup/>setup</a><a class="tag" href=/tags/productivity/>productivity</a></section><section class="article navigation"><p><a class="link" href="/posts/remote-ssh-home-computer/"><span class="li">&larr;</span>Cloud is not free, Wakeup and SSH to your home computer remotely</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
     <p class="copyright">©2020 Ryan Ma</p>
     <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
