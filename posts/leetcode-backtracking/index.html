@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Backtracking Template for Solving Permutation Problems&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.71e7bedb16308d1ff1d2cb5e7ec50cc61ffe93c1e10cbd72a3902bfbf92ce5aeda64ee9627b1f488eda24ac024528aaf.css" integrity="sha384-cee&#43;2xYwjR/x0stefsUMxh/&#43;k8HhDL1yo5Ar&#43;/ks5a7aZO6WJ7H0iO2iSsAkUoqv">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
+<body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Backtracking Template for Solving Permutation Problems</h1><p class="article date">Tuesday, February 18, 2020</p></section><article class="article markdown-body"><h3 id="what-is-backtracking">What Is Backtracking</h3>
+<h3 id="backtracking-template">Backtracking Template</h3>
+<h3 id="example">Example</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">parentheses</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">generateParenthesis</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+
+
+        <span class="n">backtrack</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">,</span><span class="n">n</span><span class="o">,</span><span class="n">n</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">parentheses</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">parentheses</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">backtrack</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">=</span><span class="o">=</span> <span class="n">0</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">right</span> <span class="o">=</span><span class="o">=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">parentheses</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span> <span class="o">|</span><span class="o">|</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">String</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="s">&#34;(&#34;</span><span class="o">;</span>
+        <span class="n">backtrack</span><span class="o">(</span><span class="n">tmp</span><span class="o">,</span> <span class="n">left</span><span class="o">-</span><span class="n">1</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="s">&#34;)&#34;</span><span class="o">;</span>
+        <span class="n">backtrack</span><span class="o">(</span><span class="n">tmp</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">-</span><span class="n">1</span><span class="o">)</span><span class="o">;</span>
+
+        <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></article><section class="article labels"><a class="category" href=/categories/leetcode/>leetcode</a><a class="category" href=/categories/interview-prep/>interview prep</a><a class="tag" href=/tags/backtracking/>backtracking</a></section></div><section class="article navigation"><p><a class="link" href="/posts/hadoop-multi-namespaces/"><span class="li">&rarr;</span>Accessing mutiple Hadoop amespaces with native HDFS client</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Ryan Ma</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-73966605-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+</div>
+</body>
+
+</html>

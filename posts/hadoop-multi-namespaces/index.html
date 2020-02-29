@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Accessing mutiple Hadoop amespaces with native HDFS client&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.100cc93081b13176ec40efca1e644a09b39732c84be99de58100b0d3ddea7c37ef65e1f4311ada7fb94979371e6278af.css" integrity="sha384-EAzJMIGxMXbsQO/KHmRKCbOXMshL6Z3lgQCw093qfDfvZeH0MRraf7lJeTceYniv">
+<meta name="supported-color-schemes" content="light dark"><title>Accessing mutiple Hadoop amespaces with native HDFS client&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.71e7bedb16308d1ff1d2cb5e7ec50cc61ffe93c1e10cbd72a3902bfbf92ce5aeda64ee9627b1f488eda24ac024528aaf.css" integrity="sha384-cee&#43;2xYwjR/x0stefsUMxh/&#43;k8HhDL1yo5Ar&#43;/ks5a7aZO6WJ7H0iO2iSsAkUoqv">
 
 <link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
 <body>
     <div class="base-body"><section id="header" class="site header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content"><section class="article header">
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content"><div class="article-container"><section class="article header">
     <h1 class="article title">Accessing mutiple Hadoop amespaces with native HDFS client</h1><p class="article date">Wednesday, February 5, 2020</p></section><article class="article markdown-body"><p>In hadoop we can have multiple namespaces in <code>hdfs-site.xml</code> for HDFS clients. This is achieved by a HDFS feature called: <a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/Federation.html"target="_blank">HDFS Federation</a></p>
 <h3 id="why-do-you-need-multiple-namespaces">Why do you need multiple namespaces</h3>
 <p>This feature is particularly useful when you need to distcp data between multiple highly available remote hadoop clusters. For HA clusters we don't always know the address of active namenode and it's not recommanded to hardcode the active namenode address in the distcp command in case of namenode fail over.</p>
@@ -15,88 +15,88 @@
 <p>Cloudera has a detailed <a href="https://docs.cloudera.com/documentation/enterprise/5-14-x/topics/cdh_admin_distcp_data_cluster_migrate.html#distcp_ha"target="_blank">document</a> on how to setup distcp with HA remote clusters. In essence, you need to edit <code>dfs.nameservices</code> property and add the following properties to <code>hdfs-site.xml</code>. (I have prepared a <a href="https://gist.github.com/ryanym/eb3618efd2572d0b97c962b6be57d6bf"target="_blank">script</a> to generate below content, it assumes all services are in their default ports)</p>
 <p>Edit:</p>
 <p>Note the order of the nameservices matters, the first nameservice will be the default hdfs namespace that you can access without the <code>hdfs://</code> URI</p>
-<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property</span><span class="nt">&gt;</span>
- <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.nameservices<span class="nt">&lt;/name&gt;</span>
- <span class="nt">&lt;value</span><span class="nt">&gt;</span>nameservice1,pdvnameservice<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-</code></pre></div><p>Add:</p>
-<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml">  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.ha.namenodes.pdvnameservice<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>namenode1,namenode2<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.client.failover.proxy.provider.pdvnameservice<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.ha.automatic-failover.enabled.pdvnameservice<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>true<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.rpc-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:8020<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.rpc-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:8020<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.servicerpc-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:8022<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.servicerpc-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:8022<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.http-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:50070<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.http-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:50070<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.https-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:50470<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.https-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:50470<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.rpc-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:8020<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.rpc-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:8020<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.servicerpc-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:8022<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.servicerpc-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:8022<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.http-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:50070<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.http-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:50070<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.https-address.pdvnameservice.namenode1<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master1.example.com:50470<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-  <span class="nt">&lt;property</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;name</span><span class="nt">&gt;</span>dfs.namenode.https-address.pdvnameservice.namenode2<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value</span><span class="nt">&gt;</span>master2.example.com:50470<span class="nt">&lt;/value&gt;</span>
-  <span class="nt">&lt;/property&gt;</span>
-</code></pre></div><h3 id="test-the-added-namespace">Test the added namespace</h3>
+<pre><code>&lt;property&gt;
+ &lt;name&gt;dfs.nameservices&lt;/name&gt;
+ &lt;value&gt;nameservice1,pdvnameservice&lt;/value&gt;
+&lt;/property&gt;
+</code></pre><p>Add:</p>
+<pre><code>  &lt;property&gt;
+    &lt;name&gt;dfs.ha.namenodes.pdvnameservice&lt;/name&gt;
+    &lt;value&gt;namenode1,namenode2&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.client.failover.proxy.provider.pdvnameservice&lt;/name&gt;
+    &lt;value&gt;org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.ha.automatic-failover.enabled.pdvnameservice&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.rpc-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:8020&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.rpc-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:8020&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.servicerpc-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:8022&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.servicerpc-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:8022&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.http-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:50070&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.http-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:50070&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.https-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:50470&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.https-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:50470&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.rpc-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:8020&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.rpc-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:8020&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.servicerpc-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:8022&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.servicerpc-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:8022&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.http-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:50070&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.http-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:50070&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.https-address.pdvnameservice.namenode1&lt;/name&gt;
+    &lt;value&gt;master1.example.com:50470&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.https-address.pdvnameservice.namenode2&lt;/name&gt;
+    &lt;value&gt;master2.example.com:50470&lt;/value&gt;
+  &lt;/property&gt;
+</code></pre><h3 id="test-the-added-namespace">Test the added namespace</h3>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">hdfs --config ~/hadoop-conf-editted dfs -ls hdfs://addednameservice/                   
 Found <span class="m">13</span> items
 drwx------+  - hbase        hbase                 <span class="m">0</span> 2020-02-04 15:25 hdfs://addednameservice/hbase
@@ -117,8 +117,7 @@ drwxrwxr-x+  - hdfs         supergroup            <span class="m">0</span> 2020-
 </code></pre></div><h3 id="going-to-hdfs-federation">Going to HDFS Federation</h3>
 <p>If you are using Cloudera distribution of hadoop this can be done in Cloudera Manager using <a href="https://docs.cloudera.com/documentation/enterprise/5-14-x/topics/cdh_admin_distcp_data_cluster_migrate.html#distcp_ha"target="_blank">Add Nameservice</a></p>
 <p>Note that HDFS Federation is <strong>not</strong> supported in CDH 6 or CDP</p>
-</article><section class="article labels"><a class="category" href=/categories/bigdata/>bigdata</a><a class="tag" href=/tags/hadoop/>hadoop</a></section><section class="article navigation"><p><a class="link" href="/posts/remote-ssh-home-computer/"><span class="li">&rarr;</span>Cloud is not free, Wakeup and SSH to your home computer remotely</a class="link">
-    </p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+</article><section class="article labels"><a class="category" href=/categories/bigdata/>bigdata</a><a class="tag" href=/tags/hadoop/>hadoop</a></section></div><section class="article navigation"><p><a class="link" href="/posts/leetcode-lru-cache/"><span class="li">&larr;</span>Implement LRU Cache</a></p><p><a class="link" href="/posts/remote-ssh-home-computer/"><span class="li">&rarr;</span>Cloud is not free, Wakeup and SSH to your home computer remotely</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
     <p class="copyright">©2020 Ryan Ma</p>
     <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 

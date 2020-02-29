@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
+    <loc>https://ryanym.com/categories/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/hashmap/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/posts/leetcode-lru-cache/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/interview-prep/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/leetcode/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/linkedlist/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/posts/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
+    <loc>https://ryanym.com/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/hadoop-multi-namespaces/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/categories/bigdata/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/categories/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/hadoop/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/posts/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/tags/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/</loc><lastmod>2020-02-05T22:26:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/cloud/</loc><lastmod>2019-03-10T17:04:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/remote-ssh-home-computer/</loc><lastmod>2019-03-10T17:04:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/categories/setup/</loc><lastmod>2019-03-10T17:04:04-05:00</lastmod></url><url>

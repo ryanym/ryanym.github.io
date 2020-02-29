@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>backtracking&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.71e7bedb16308d1ff1d2cb5e7ec50cc61ffe93c1e10cbd72a3902bfbf92ce5aeda64ee9627b1f488eda24ac024528aaf.css" integrity="sha384-cee&#43;2xYwjR/x0stefsUMxh/&#43;k8HhDL1yo5Ar&#43;/ks5a7aZO6WJ7H0iO2iSsAkUoqv"><link rel="alternate" type="application/rss+xml" href="/tags/backtracking/index.xml" title="Untitled Thoughts" />
+
+<link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
+<body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div><div class="site slogan"><span class="title">"The more you know, the more you know you don't know." -- Aristotle</span></div></section><div id="content"><section class="article header"><h1>backtracking</h1></section><ul class="note list"><li class="item"><a class="note" href="/posts/leetcode-backtracking/">
+            <p class="note title">Backtracking Template for Solving Permutation Problems</p><p class="note date">Tuesday, February 18, 2020</p><p class="note content">What Is Backtracking Backtracking Template Example class Solution { private List&lt;String&gt; parentheses = new ArrayList&lt;&gt;(); public List&lt;String&gt; generateParenthesis(int n) { backtrack(&#34;&#34;,n,n); System.out.println(parentheses.toString()); return parentheses; } private void backtrack(String s, int left, int right) { if (left == 0 &amp;&amp; right == 0) { parentheses.add(s); return; } if (left &gt; right || left &lt; 0) { return; } String tmp = s + &#34;(&#34;; backtrack(tmp, left-1, right); tmp = s + &#34;)&#34;; backtrack(tmp, left, right-1); return; } } </p></a><p class="note labels"><a class="category" href="/categories/leetcode/">leetcode</a><a class="category" href="/categories/interview-prep/">interview prep</a><a class="tag" href="/tags/backtracking/">backtracking</a></p></li></ul></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Ryan Ma</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-73966605-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+</div>
+</body>
+
+</html>

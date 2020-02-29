@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>backtracking on Untitled Thoughts</title>
+    <link>/tags/backtracking/</link>
+    <description>Recent content in backtracking on Untitled Thoughts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©2020 Ryan Ma</copyright>
+    <lastBuildDate>Tue, 18 Feb 2020 08:07:04 -0500</lastBuildDate>
+    
+        <atom:link href="/tags/backtracking/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Backtracking Template for Solving Permutation Problems</title>
+      <link>/posts/leetcode-backtracking/</link>
+      <pubDate>Tue, 18 Feb 2020 08:07:04 -0500</pubDate>
+      
+      <guid>/posts/leetcode-backtracking/</guid>
+      <description>What Is Backtracking Backtracking Template Example class Solution { private List&amp;lt;String&amp;gt; parentheses = new ArrayList&amp;lt;&amp;gt;(); public List&amp;lt;String&amp;gt; generateParenthesis(int n) { backtrack(&amp;#34;&amp;#34;,n,n); System.out.println(parentheses.toString()); return parentheses; } private void backtrack(String s, int left, int right) { if (left == 0 &amp;amp;&amp;amp; right == 0) { parentheses.add(s); return; } if (left &amp;gt; right || left &amp;lt; 0) { return; } String tmp = s + &amp;#34;(&amp;#34;; backtrack(tmp, left-1, right); tmp = s + &amp;#34;)&amp;#34;; backtrack(tmp, left, right-1); return; } } </description>
+    </item>
+    
+  </channel>
+</rss>
