@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
-    <lastBuildDate>Thu, 27 Feb 2020 08:07:04 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2020 18:07:04 -0500</lastBuildDate>
     
         <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>binary tree</title>
+      <link>/tags/binary-tree/</link>
+      <pubDate>Wed, 04 Mar 2020 18:07:04 -0500</pubDate>
+      
+      <guid>/tags/binary-tree/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>graph</title>
+      <link>/tags/graph/</link>
+      <pubDate>Wed, 04 Mar 2020 18:07:04 -0500</pubDate>
+      
+      <guid>/tags/graph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tree</title>
+      <link>/tags/tree/</link>
+      <pubDate>Wed, 04 Mar 2020 18:07:04 -0500</pubDate>
+      
+      <guid>/tags/tree/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>hashmap</title>

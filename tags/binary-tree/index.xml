@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>leetcode on Untitled Thoughts</title>
-    <link>/categories/leetcode/</link>
-    <description>Recent content in leetcode on Untitled Thoughts</description>
+    <title>binary tree on Untitled Thoughts</title>
+    <link>/tags/binary-tree/</link>
+    <description>Recent content in binary tree on Untitled Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
     <lastBuildDate>Wed, 04 Mar 2020 18:07:04 -0500</lastBuildDate>
     
-        <atom:link href="/categories/leetcode/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/binary-tree/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,18 +20,6 @@
       <guid>/posts/leetcode-binary-tree/</guid>
       <description>Binary Tree A binary tree is a special type of graph which cannot have any cycles. It is very different from binary search tree in term of properties and usage. Binary tree is an efficient way of representing hiearchical data, and its advanced forms are widely used in implementing database indices, sorting algorithms, encoders and decision-making process.
 Binary Tree problems are great to test one&#39;s ability to think recursively, since recursion one of the fundamentals of CS.</description>
-    </item>
-    
-    <item>
-      <title>Implement LRU Cache</title>
-      <link>/posts/leetcode-lru-cache/</link>
-      <pubDate>Thu, 27 Feb 2020 08:07:04 -0500</pubDate>
-      
-      <guid>/posts/leetcode-lru-cache/</guid>
-      <description>Problem: 146. LRU Cache
- Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
-get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
-put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</description>
     </item>
     
   </channel>

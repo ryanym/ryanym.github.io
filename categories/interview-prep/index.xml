@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
-    <lastBuildDate>Thu, 27 Feb 2020 08:07:04 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2020 18:07:04 -0500</lastBuildDate>
     
         <atom:link href="/categories/interview-prep/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Binary Tree Interview Questions</title>
+      <link>/posts/leetcode-binary-tree/</link>
+      <pubDate>Wed, 04 Mar 2020 18:07:04 -0500</pubDate>
+      
+      <guid>/posts/leetcode-binary-tree/</guid>
+      <description>Binary Tree A binary tree is a special type of graph which cannot have any cycles. It is very different from binary search tree in term of properties and usage. Binary tree is an efficient way of representing hiearchical data, and its advanced forms are widely used in implementing database indices, sorting algorithms, encoders and decision-making process.
+Binary Tree problems are great to test one&#39;s ability to think recursively, since recursion one of the fundamentals of CS.</description>
+    </item>
     
     <item>
       <title>Implement LRU Cache</title>
