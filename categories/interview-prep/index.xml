@@ -19,25 +19,14 @@
       
       <guid>/posts/ctci-on-leetcode/</guid>
       <description>Note this page is still work in progress
-[TOC]
-Chapter 1: Arrays and Strings 1.1 Is Unique
+ Chapter 1: Arrays and Strings Chapter 2: Linked Lists Chapter 3: Stacks and Queues Chapter 4: Trees and Graphs Chapter 8: Recursion and Dynamic Programming Chapter 10: Sorting and Searching  Chapter 1: Arrays and Strings 1.1 Is Unique
 217. Contains Duplicate
 1.2 Check Permutation
 567. Permutation in String
 1.3 URLify
 404
 1.4 Palindrome Permutation
-266. Palindrome Permutation  (Leetcode premium)
-1.5 One Away
-72. Edit Distance (more difficult)
-1.6 String Compression
-443. String Compression
-1.7 Rotate Matrix
-48. Image
-1.8 Zero Matrix
-73. Set Matrix Zeroes
-1.9 String Rotation
-796. Rotate String (similar idea)</description>
+266. Palindrome Permutation  (Leetcode premium)</description>
     </item>
     
     <item>
