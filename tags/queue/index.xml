@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tree on Untitled Thoughts</title>
-    <link>/tags/tree/</link>
-    <description>Recent content in tree on Untitled Thoughts</description>
+    <title>queue on Untitled Thoughts</title>
+    <link>/tags/queue/</link>
+    <description>Recent content in queue on Untitled Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
     <lastBuildDate>Mon, 30 Mar 2020 18:07:04 -0500</lastBuildDate>
     
-        <atom:link href="/tags/tree/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/queue/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -38,16 +38,6 @@ Chapter 1: Arrays and Strings 1.1 Is Unique
 73. Set Matrix Zeroes
 1.9 String Rotation
 796. Rotate String (similar idea)</description>
-    </item>
-    
-    <item>
-      <title>Binary Tree Interview Questions</title>
-      <link>/posts/leetcode-binary-tree/</link>
-      <pubDate>Wed, 04 Mar 2020 18:07:04 -0500</pubDate>
-      
-      <guid>/posts/leetcode-binary-tree/</guid>
-      <description>Binary Tree A binary tree is a special type of graph which cannot have any cycles. It is very different from binary search tree in term of properties and usage. Binary tree is an efficient way of representing hiearchical data, and its advanced forms are widely used in implementing database indices, sorting algorithms, encoders and decision-making process.
-Binary Tree problems are great to test one&#39;s ability to think recursively, since recursion one of the fundamentals of CS.</description>
     </item>
     
   </channel>

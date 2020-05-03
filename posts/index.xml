@@ -7,10 +7,38 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
-    <lastBuildDate>Wed, 04 Mar 2020 18:07:04 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2020 18:07:04 -0500</lastBuildDate>
     
         <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cracking the Coding Interview questions on Leetcode</title>
+      <link>/posts/ctci-on-leetcode/</link>
+      <pubDate>Mon, 30 Mar 2020 18:07:04 -0500</pubDate>
+      
+      <guid>/posts/ctci-on-leetcode/</guid>
+      <description>Note this page is still work in progress
+[TOC]
+Chapter 1: Arrays and Strings 1.1 Is Unique
+217. Contains Duplicate
+1.2 Check Permutation
+567. Permutation in String
+1.3 URLify
+404
+1.4 Palindrome Permutation
+266. Palindrome Permutation  (Leetcode premium)
+1.5 One Away
+72. Edit Distance (more difficult)
+1.6 String Compression
+443. String Compression
+1.7 Rotate Matrix
+48. Image
+1.8 Zero Matrix
+73. Set Matrix Zeroes
+1.9 String Rotation
+796. Rotate String (similar idea)</description>
+    </item>
     
     <item>
       <title>Binary Tree Interview Questions</title>
