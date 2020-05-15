@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>bigdata on Untitled Thoughts</title>
     <link>/categories/bigdata/</link>
@@ -20,6 +20,7 @@
       <guid>/posts/hadoop-multi-namespaces/</guid>
       <description>In hadoop we can have multiple namespaces in hdfs-site.xml for HDFS clients. This is achieved by a HDFS feature called: HDFS Federation
 Why do you need multiple namespaces This feature is particularly useful when you need to distcp data between multiple highly available remote hadoop clusters. For HA clusters we don&#39;t always know the address of active namenode and it&#39;s not recommanded to hardcode the active namenode address in the distcp command in case of namenode fail over.</description>
+      
     </item>
     
   </channel>

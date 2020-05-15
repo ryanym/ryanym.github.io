@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Untitled Thoughts</title>
     <link>/tags/</link>
@@ -7,10 +7,40 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
-    <lastBuildDate>Mon, 30 Mar 2020 18:07:04 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Operating System</title>
+      <link>/tags/operating-system/</link>
+      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/operating-system/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>PCB</title>
+      <link>/tags/pcb/</link>
+      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pcb/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Process</title>
+      <link>/tags/process/</link>
+      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/process/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>array</title>
@@ -19,6 +49,7 @@
       
       <guid>/tags/array/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -28,6 +59,7 @@
       
       <guid>/tags/binary-tree/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -37,6 +69,7 @@
       
       <guid>/tags/bit-manipulation/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -46,6 +79,7 @@
       
       <guid>/tags/graph/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -55,6 +89,7 @@
       
       <guid>/tags/linkedlist/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -64,6 +99,7 @@
       
       <guid>/tags/queue/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -73,6 +109,7 @@
       
       <guid>/tags/stack/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -82,6 +119,7 @@
       
       <guid>/tags/tree/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -91,6 +129,7 @@
       
       <guid>/tags/hashmap/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -100,6 +139,7 @@
       
       <guid>/tags/hadoop/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -109,6 +149,7 @@
       
       <guid>/tags/cloud/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -118,6 +159,7 @@
       
       <guid>/tags/ssh/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -127,6 +169,7 @@
       
       <guid>/tags/productivity/</guid>
       <description></description>
+      
     </item>
     
   </channel>

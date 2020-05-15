@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
+    <loc>https://ryanym.com/categories/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/posts/cs6200-week1/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/cs6200/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/omscs/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/operating-system/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/pcb/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/posts/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/process/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/array/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/binary-tree/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/bit-manipulation/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/categories/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/ctci-on-leetcode/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/graph/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/categories/interview-prep/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/categories/leetcode/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/linkedlist/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/posts/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/queue/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/stack/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/tags/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/tree/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/leetcode-binary-tree/</loc><lastmod>2020-03-04T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/hashmap/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/leetcode-lru-cache/</loc><lastmod>2020-02-27T08:07:04-05:00</lastmod></url><url>
@@ -27,4 +33,5 @@
     <loc>https://ryanym.com/tags/ssh/</loc><lastmod>2019-03-10T17:04:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/producitivity-tools/</loc><lastmod>2018-02-27T22:04:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/productivity/</loc><lastmod>2018-02-27T22:04:04-05:00</lastmod></url><url>
-    <loc>https://ryanym.com/bookshelf/</loc></url></urlset>
+    <loc>https://ryanym.com/bookshelf/</loc></url><url>
+    <loc>https://ryanym.com/coursework/</loc></url></urlset>

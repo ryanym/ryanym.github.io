@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>CS 6200 Week 1 Notes&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.8c24852e5f6a6bd910400b8fbb878613fcb4debd54b64e9c0e3309c16ff60dd7c9fb88e29ad2fbefeb14054f849ce8ad.css" integrity="sha384-jCSFLl9qa9kQQAuPu4eGE/y03r1Utk6cDjMJwW/2DdfJ&#43;4jimtL77&#43;sUBU&#43;EnOit"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="CS 6200 Week 1 Notes" />
+
+<link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
+<body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/coursework">Coursework</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">CS 6200 Week 1 Notes</h1><p class="article date">Monday, May 11, 2020</p></section><article class="article markdown-body"><h2 id="c-tutorial">C Tutorial</h2>
+<p><a href="http://cslibrary.stanford.edu/101/EssentialC.pdf"target="_blank">Essential C</a></p>
+<p><a href="http://cslibrary.stanford.edu/102/PointersAndMemory.pdf"target="_blank">Pointers and Memory</a></p>
+<h2 id="what-is-an-operating-system">What is an Operating System</h2>
+<p>An operating system abstract and arbitrary the use of underlying hardware</p>
+<h3 id="os-modes">OS modes</h3>
+<p>OS has two modes, (privileged) kernel mode and (unprivileged) user mode. Kernel mode allows access to hardware while user mode does not. If application tries to access hardware directly, that instruction will be trapped and OS will step in to verify if the instruction should go through or not.</p>
+<h3 id="os-services">OS Services</h3>
+<ul>
+<li>Scheduler: controlling access to CPU</li>
+<li>Memory Manager: allocating physical memory to different applications</li>
+<li>Block Device Driver: managing access to block device such as disk</li>
+<li>Higher Level Services: file system, process management, device management and etc</li>
+</ul>
+<h3 id="os-system-calls">OS System Calls</h3>
+<p><a href="http://www.cheat-sheets.org/saved-copy/Linux_Syscall_quickref.pdf"target="_blank">LINUX System Call Quick Reference</a></p>
+<h3 id="os-design">OS Design</h3>
+<ul>
+<li>Monolithic
+<ul>
+<li>Compile time optimized, everything is included</li>
+<li>Unmaintainable, more memory required</li>
+</ul>
+</li>
+<li>Modular
+<ul>
+<li>Include basic APIs, most commonly used</li>
+<li>Good maintainability</li>
+<li>Indirection can (slightly) impact performance due to interfaces</li>
+</ul>
+</li>
+<li>Microkernel
+<ul>
+<li>Only require the most basic primitives at OS level, everything else like FS and drivers would run at user level</li>
+<li>Requires lots of inter-process communication</li>
+<li>Good size and verifiability (embedded systems, microcontrollers)</li>
+<li>Complexity of software development; cost of user/kernel crossing</li>
+</ul>
+</li>
+</ul>
+<h1 id="processes-and-process-management">Processes and Process Management</h1>
+<p>A process is an stance of an executing program</p>
+<h3 id="process-states">Process States</h3>
+<ul>
+<li>Text and data: static state when process first loads</li>
+<li>Heap: dynamically created during execution</li>
+<li>Stack: grows and shrinks during execution, LIFO queue</li>
+</ul>
+<h3 id="address-space">Address Space</h3>
+<p>Address space is virtual, it's a in memory representation of a process. Page table is mapping of virtual to physical address</p>
+<p>Different processes can have the same address space range and the exact same (virtual) addresses</p>
+<h3 id="process-execution-state">Process Execution State</h3>
+<p>OS uses program counter to keep track of processes instructions, it's maintained on the CPU's registers while process is executing. OS also uses stack pointer of each process to keep track its state.</p>
+<h3 id="process-control-block">Process Control Block</h3>
+<p>A PCB is a data structure OS maintains for every process, it's created when process is created. It keeps the following information:</p>
+<pre><code>- process state
+- process number
+- program counter
+- registers
+- memory limits 
+- list of open files
+- priority 
+- signal mask
+- CPU scheduling info
+</code></pre>
+<p>Certain fields are updated when process state change.CPU has dedicated registers for program counters and it is updated on every instruction. OS then collects this data and update it in PCB when this process is no longer running on the CPU.</p>
+<p>For example, if we have 2 processes P1 and P2. P1 executes first and is interrupted by CPU, CPU save PCB_P1 and restore/create PCB_P2. P2 gets executed on the CPU and when it finishes CPU then restore PCB_P1 and continue P1 execution. This is mechanism is called context switch.</p>
+<h3 id="context-switch">Context Switch</h3>
+<p>Context switch is the mechanism used by the operating system to switch the context of one process to the context of another process</p>
+<p>This operation can be expansive due to: 1. number of cycles for load and store PCB to and from memory. 2. Cache of the current process will become cold when switched to another process. Cache misses increase and will spend more time to read from memory.</p>
+<p>Frequency of context switching needs to be limited.</p>
+<h3 id="process-life-cycle">Process Life Cycle</h3>
+<p>In basic form, process can be <strong>running</strong> or <strong>idle</strong>, diagram below is a more complete representation of process life cycle</p>
+<p><img  src="../../image-20200514213107674.png"
+        alt="image-20200514213107674"/></p>
+<h3 id="process-creation">Process Creation</h3>
+<p>Processes are created in a tree structure:</p>
+<p><img  src="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/notes/ud923-p2l1-process-tree.png"
+        alt="process tree"/></p>
+<ul>
+<li>Fork:
+<ul>
+<li>copies the parent PCB into new child PCB</li>
+<li>child continues execution at instruction after fork</li>
+</ul>
+</li>
+<li>Exec
+<ul>
+<li>replace child image</li>
+<li>load new program start from the first instruction</li>
+</ul>
+</li>
+<li>To create a new process, first <code>fork</code> the parent then <code>exec</code> the child process with the new program</li>
+</ul>
+<h3 id="cpu-scheduler">CPU Scheduler</h3>
+<p>A CPU scheduler determines which one of the currently ready process will be dispatched to the CPU to start running, and how long it should run for. In order to manage the CPU, OS needs to preempt and run scheduling algorithms to choose next process then dispatch process and switch into its context. An OS must be efficient in a sense that it should minimize time to perform the above tasks.</p>
+<p>$$
+CPU_{useful} = \frac{Total\: Processing\: Time}{Total\: Time} = \frac{2\,T_{process}}{(2\,T_{process} +2\,T_{schedule})}
+$$</p>
+<h3 id="inter-process-communication">Inter-Process Communication</h3>
+<p>IPC mechanisms:</p>
+<ul>
+<li>transfer data between address spaces</li>
+<li>maintain protection and isolation</li>
+<li>provide flexibility and performance</li>
+</ul>
+<h4 id="message-passing-ipc">Message Passing IPC</h4>
+<p>OS provides communication channels (like a shared buffer) so that processes can read <code>recv</code> / write <code>send</code> messages from/to channel. However there's an overhead of copying data from address space one process to the shared channel, then, copy data from shared channel to address space of the other process.</p>
+<h4 id="shared-memory-ipc">Shared Memory IPC</h4>
+<p>OS establish the memory channel between two processes and processes directly read/write from/to this memory. OS does not isolate this address space. However, this requires process to implement the communication and setup cost of mapping memory between processes is expansive.</p>
+</article><section class="article labels"><a class="category" href=/categories/omscs/>OMSCS</a><a class="category" href=/categories/cs6200/>CS6200</a><a class="tag" href=/tags/operating-system/>Operating System</a><a class="tag" href=/tags/process/>Process</a><a class="tag" href=/tags/pcb/>PCB</a></section></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/ctci-on-leetcode/"><span class="li iconfont icon-article"></span>Cracking the Coding Interview questions on Leetcode</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Ryan Ma</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-73966605-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+</body>
+
+</html>
