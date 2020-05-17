@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>CS6200 on Untitled Thoughts</title>
-    <link>/categories/cs6200/</link>
-    <description>Recent content in CS6200 on Untitled Thoughts</description>
+    <title>Concurrency on Untitled Thoughts</title>
+    <link>/tags/concurrency/</link>
+    <description>Recent content in Concurrency on Untitled Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2020 Ryan Ma</copyright>
     <lastBuildDate>Sat, 16 May 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/categories/cs6200/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,19 +22,6 @@
 Paper Summary credit to: christian.thompson@gatech.edu
 Threads and Concurrency Process vs Thread Process has its own address space and execution context where threads share the same address space, each thread still has its own execution context.
 Benefits of Multithreading  Parallelization of the tasks (on multiple CPUs) achieves speed up Specialization of the tasks can results in execution with hotter cache Less memory intensive compare to splitting the application into different processes More efficient in communication (cheaper IPC)  In a single CPU setup, multithreading can still be value considering when one task is idle and we can context switch to another task as long as the idle time is less than 2 * context switching time</description>
-      
-    </item>
-    
-    <item>
-      <title>CS 6200 Week 1 Notes</title>
-      <link>/posts/cs6200-week1/</link>
-      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/cs6200-week1/</guid>
-      <description>C Tutorial Essential C
-Pointers and Memory
-What is an Operating System An operating system abstract and arbitrary the use of underlying hardware
-OS modes OS has two modes, (privileged) kernel mode and (unprivileged) user mode. Kernel mode allows access to hardware while user mode does not. If application tries to access hardware directly, that instruction will be trapped and OS will step in to verify if the instruction should go through or not.</description>
       
     </item>
     

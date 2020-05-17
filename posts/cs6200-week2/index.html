@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>CS 6200 Week 2 Notes&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.8c24852e5f6a6bd910400b8fbb878613fcb4debd54b64e9c0e3309c16ff60dd7c9fb88e29ad2fbefeb14054f849ce8ad.css" integrity="sha384-jCSFLl9qa9kQQAuPu4eGE/y03r1Utk6cDjMJwW/2DdfJ&#43;4jimtL77&#43;sUBU&#43;EnOit"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="CS 6200 Week 2 Notes" />
+
+<link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
+<body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/coursework">Coursework</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">CS 6200 Week 2 Notes</h1><p class="article date">Saturday, May 16, 2020</p></section><article class="article markdown-body"><h1 id="readings">Readings</h1>
+<p><a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-birrell-paper.pdf"target="_blank">Birrell, Andrew, An Introduction to Programming with Threads.</a></p>
+<p><a href="https://d1b10bmlvqabco.cloudfront.net/attach/ka1yvdujzl92f6/k52gdceatv478l/ka99vjt0kbzz/GIOS_Papers__Birrell__Introduction_to_Programming_with_Threads.pdf"target="_blank">Paper Summary</a> credit to: <a href="mailto:christian.thompson@gatech.edu">christian.thompson@gatech.edu</a></p>
+<h1 id="threads-and-concurrency">Threads and Concurrency</h1>
+<h2 id="process-vs-thread">Process vs Thread</h2>
+<p>Process has its own address space and execution context where threads share the same address space, each thread still has its own execution context.</p>
+<h2 id="benefits-of-multithreading">Benefits of Multithreading</h2>
+<ul>
+<li>Parallelization of the tasks (on multiple CPUs) achieves speed up</li>
+<li>Specialization of the tasks can results in execution with hotter cache</li>
+<li>Less memory intensive compare to splitting the application into different processes</li>
+<li>More efficient in communication (cheaper IPC)</li>
+</ul>
+<p>In a single CPU setup, multithreading can still be value considering when one task is idle and we can context switch to another task as long as the idle time is less than 2 * context switching time</p>
+<p>Note that context switching within threads is much less expansive than context switching between processes. This is because context switch in threads doesn't need to recreate new virtual to physical mappings.</p>
+<h2 id="thread-mechanism">Thread Mechanism</h2>
+<h3 id="thread-data-structure">Thread Data structure</h3>
+<h3 id="create-and-manage-threads">Create and Manage Threads</h3>
+<p>Thread Type: Thread data structure which contains thread ID, PC, SP, registers, stack, attributes<br>
+Fork(proc, args): This is not a unix fork which creates a new process, fork in this context creates a new thread
+Join(thread): terminates a thread, all the resources of the thread will be freed</p>
+<p>Mutual Exclusion</p>
+<p>Birrell's Lock API</p>
+<pre><code>Lock(m) {
+	// critical section
+} // unlock;
+</code></pre><p>Common Thread API</p>
+<pre><code>lock(m);
+// critical section
+unlock(m);
+</code></pre><h3 id="coordinate-threads">Coordinate Threads</h3>
+<p>Synchronization Mechanism</p>
+<ul>
+<li>Mutual Exclusion: exclusive access to only one thread at a time. This is achieved with mutex.</li>
+<li>Waiting on other threads: specific condition before proceeding using condition variable</li>
+</ul>
+<h3 id="conditional-variable">Conditional Variable</h3>
+<p>Condition type
+Wait(mutex, cond): mutex is automatically released and re-acquired on wait
+Signal(cond): notify only one thread waiting on condition
+Broadcast(cond): notify all waiting threads</p>
+<h3 id="readers--writer-problem">Readers / Writer Problem</h3>
+<p>0 or more readers can access the resource at the same time
+0 or 1 writer can access the resource at the same time
+reader and writer cannot access the resource at the same time</p>
+<p>Mutex can be applied but it's too restrictive since it only has two states. This is fine for writer but we want to allow 0 or more readers to access resource at the same time</p>
+<p>We need a lock that can represent the following logic</p>
+<pre><code>if ((read_counter == 0) and (write_counter == 0))
+		Read_ok
+		Write_ok
+if (read_counter &gt; 0) 
+		Read_ok
+if (write_counter == 1)
+		Read_no
+		Write_no
+</code></pre><p>Therefore state of the shared resource can be encoded as:
+Free: resource_counter = 0
+Reading: resource_counter &gt; 0
+Writing: resource_couner = -1</p>
+<p>We then use a mutex to protect this <code>resource_counter</code> variable, the actual read or write operation does not have to be within the lock. Below is pseudo code of this implementation.
+<img  src="../../image-20200516205558355.png"
+        alt="image-20200516205558355"/></p>
+<p>A more generalized implementation<br>
+<img  src="../../image-20200516210220972.png"
+        alt="image-20200516210220972"/></p>
+<h3 id="common-pitfalls">Common Pitfalls</h3>
+<ul>
+<li>keep track of mutex and condition variables used with a resource</li>
+<li>check that always using lock and unlock</li>
+<li>use a single mutex to access a single resource</li>
+<li>check if signaling the correct condition</li>
+<li>check that not using signal when broadcast is needed (opposite of this is ok)</li>
+<li>check if need priority guarantee</li>
+</ul>
+<h2 id="multithreading-models">Multithreading Models</h2>
+<h3 id="one-to-one-model">One-to-One Model</h3>
+<p>User thread is mapped to a kernel thread. This approach OS sees and understands the threads and provide supports for synchronization, blocking and etc. The downside of this is user threads must go to OS for all operations which might be expansive and OS may have limits on policies, thread numbers and portability.</p>
+<h3 id="many-to-one-model">Many-to-One Model</h3>
+<p>All user threads are mapped to one kernel thread, user thread manager will decide which thread to be mapped to kernel thread. This approach supports portability (not limited by OS limits and polices) and don't need to make system call. Downside is that OS has no insights into applications needs, it may block entire process if one user level thread blocks on I/O.</p>
+<h3 id="many-to-many-model">Many-to-Many Model</h3>
+<p>Combination of the above models. Complexity comes in as this model requires coordination between user and kernel level thread managers</p>
+<h2 id="multithreading-patterns">Multithreading Patterns</h2>
+<h3 id="boss--workers-pattern">Boss / Workers Pattern</h3>
+<p>Boss: assign work to workers, boss places work in producer/consumer queue.
+Worker: performs entire task, they don't need to sync with other workers.</p>
+<p>Decide number of workers:
+on demand: not efficient
+pool of workers: static or dynamic</p>
+<p>Variants: Workers specialized for certain tasks, this provides better locality but load balancing for each task will be more challenging</p>
+<h3 id="pipeline-pattern">Pipeline Pattern</h3>
+<p>Threads assigned are subtask in the system. Entire tasks construct the pipeline of threads.Throughput of this pattern is the weakest link. Each stage should have its thread pool and Shared buffer/ queue based thread manager can be use to manage communication between stages.</p>
+<p>This model supports specialization and locality, downside is balancing and sync overheads.</p>
+<h3 id="layered-pattern">Layered Pattern</h3>
+<p>Group related subtasks into different layers, end-to-end tasks must pass up and down through all layers. This allows specialization and less fine-grained than pipeline. However, this pattern might not be suitable for all application and sync is more complicated.</p>
+<h1 id="pthreads">PThreads</h1>
+<p>PThreads stands for POSIX threads and POSIX stands for Portable Operating System Interface.</p>
+<h3 id="pthread-creation">PThread Creation</h3>
+<p>Similar to Birrell's Mechanisms:
+Data structure: <code>pthread_t aThread;</code>
+Fork: <code>int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void * (*start_routine)(void *), void *arg));</code>
+Join: <code>int pthread_join(pthread_t thread, void **status);</code></p>
+<h3 id="pthread-attributes">Pthread Attributes</h3>
+<p><code>pthread_attr_t</code>
+&ndash; specified in <code>pthread_create</code>
+&ndash; defines features of the new thread:
+&ndash; stack size
+&ndash; inheritance
+&ndash; joinable
+&ndash; scheduling policy
+&ndash; priority
+&ndash; system/process scope
+&ndash; has default behavior with NULL in <code>pthread_create</code></p>
+<h3 id="compiling-threads">Compiling Threads</h3>
+<ul>
+<li><code>#include &lt;pthread.h&gt;</code></li>
+<li>compile source with <code>-lpthread</code> or <code>-pthread</code>. For example, <code>gcc -o main main.c -lpthread</code></li>
+<li>check return values of common functions</li>
+</ul>
+<h3 id="pthread-mutexes">PThread Mutexes</h3>
+<p>Mutex: <code>pthread_mutex_t aMutex;</code>
+Lock(mutex): <code>int pthread_mutex_lock(pthread_mutex_t *mutex);</code>
+<code>int pthread_mutex_unlock(pthread_mutex_t *mutex);</code>
+Mutex init: <code>int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t * attr);</code>
+Trylock: <code>int pthread_mutex_trylock(pthread_mutex_t *mutex);</code>
+Mutex destroy: <code>int pthread_mutex_destroy(pthread_mutex_t *mutex);</code></p>
+<h3 id="mutex-safety-tips">Mutex Safety Tips</h3>
+<ul>
+<li>Shared data should always be accessed through a single mutex</li>
+<li>Mutex scope must be visible to all threads</li>
+<li>Globally order locks, for all threads, lock mutexes in order</li>
+<li>Always unlock a mutex, unlock the correct mutex</li>
+</ul>
+<h3 id="pthread-condition-variables">Pthread Condition Variables</h3>
+<p>Condition: <code>pthread_cond_t aCond;</code>
+Wait: <code>int pthread_cond_wait(pthread_cont_t *cond, pthread_mutex_t *mutex)</code>
+Signal: <code>int pthread_cond_signal(pthread_cond_t *cond);</code>
+Broadcast: <code>int pthread_cond_broadcast(pthread_cond_t *cond);</code>
+Condition init: <code>int pthread_cond_int(pthread_cond_t *cond, const pthread_condattr_t *attr);</code>
+Condition destroy: <code>int pthread_cond_destroy(pthread_cond_t *cond);</code></p>
+<h3 id="condition-variables-safety-tips">Condition Variables Safety Tips</h3>
+<ul>
+<li>Don't forget to notify waiting threads. When predicates change, signal/broadcast correct condition variable.</li>
+<li>When in doubt use broadcast (performance loss)</li>
+<li>Do not need a mutex to signal or broadcast</li>
+</ul>
+<h3 id="producer-and-consumer-example">Producer and Consumer Example</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="cp">#</span><span class="cp">define BUF_SIZE 3		</span><span class="cm">/* Size of shared buffer */</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUF_SIZE</span><span class="p">]</span><span class="p">;</span>  	<span class="cm">/* shared buffer */</span>
+<span class="kt">int</span> <span class="n">add</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  			<span class="cm">/* place to add next element */</span>
+<span class="kt">int</span> <span class="n">rem</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  			<span class="cm">/* place to remove next element */</span>
+<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  			<span class="cm">/* number elements in buffer */</span>
+
+<span class="n">pthread_mutex_t</span> <span class="n">m</span> <span class="o">=</span> <span class="n">PTHREAD_MUTEX_INITIALIZER</span><span class="p">;</span>  	<span class="cm">/* mutex lock for buffer */</span>
+<span class="n">pthread_cond_t</span> <span class="n">c_cons</span> <span class="o">=</span> <span class="n">PTHREAD_COND_INITIALIZER</span><span class="p">;</span> <span class="cm">/* consumer waits on this cond var */</span>
+<span class="n">pthread_cond_t</span> <span class="n">c_prod</span> <span class="o">=</span> <span class="n">PTHREAD_COND_INITIALIZER</span><span class="p">;</span> <span class="cm">/* producer waits on this cond var */</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="nf">producer</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">)</span><span class="p">;</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">consumer</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">)</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[</span><span class="p">]</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="n">pthread_t</span> <span class="n">tid1</span><span class="p">,</span> <span class="n">tid2</span><span class="p">;</span>  <span class="cm">/* thread identifiers */</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+	<span class="cm">/* create the threads; may be any number, in general */</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">producer</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">!</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">Unable to create producer thread</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+		<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span><span class="p">(</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid2</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">!</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">Unable to create consumer thread</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+		<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* wait for created thread to exit */</span>
+	<span class="n">pthread_join</span><span class="p">(</span><span class="n">tid1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span><span class="p">;</span>
+	<span class="n">pthread_join</span><span class="p">(</span><span class="n">tid2</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span><span class="p">;</span>
+	<span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">Parent quiting</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Produce value(s) */</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">producer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="o">=</span><span class="mi">20</span><span class="p">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> <span class="p">{</span>
+		
+		<span class="cm">/* Insert into buffer */</span>
+		<span class="n">pthread_mutex_lock</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>	
+			<span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">&gt;</span> <span class="n">BUF_SIZE</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>  <span class="cm">/* overflow */</span>
+			<span class="p">}</span>
+
+			<span class="k">while</span> <span class="p">(</span><span class="n">num</span> <span class="o">=</span><span class="o">=</span> <span class="n">BUF_SIZE</span><span class="p">)</span> <span class="p">{</span>  <span class="cm">/* block if buffer is full */</span>
+				<span class="n">pthread_cond_wait</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">c_prod</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>
+			<span class="p">}</span>
+			
+			<span class="cm">/* if executing here, buffer not full so add element */</span>
+			<span class="n">buffer</span><span class="p">[</span><span class="n">add</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+			<span class="n">add</span> <span class="o">=</span> <span class="p">(</span><span class="n">add</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">BUF_SIZE</span><span class="p">;</span>
+			<span class="n">num</span><span class="o">+</span><span class="o">+</span><span class="p">;</span>
+		<span class="n">pthread_mutex_unlock</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>
+
+		<span class="n">pthread_cond_signal</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">c_cons</span><span class="p">)</span><span class="p">;</span>
+		<span class="n">printf</span> <span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">producer: inserted %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="p">;</span>
+		<span class="n">fflush</span> <span class="p">(</span><span class="n">stdout</span><span class="p">)</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">producer quiting</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+	<span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span><span class="p">;</span>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Consume value(s); Note the consumer never terminates */</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">consumer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+	<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+		<span class="n">pthread_mutex_lock</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+			<span class="p">}</span> <span class="cm">/* underflow */</span>
+
+			<span class="k">while</span> <span class="p">(</span><span class="n">num</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="cm">/* block if buffer empty */</span>
+				<span class="n">pthread_cond_wait</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">c_cons</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>
+			<span class="p">}</span>
+
+			<span class="cm">/* if executing here, buffer not empty so remove element */</span>
+			<span class="n">i</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">[</span><span class="n">rem</span><span class="p">]</span><span class="p">;</span>
+			<span class="n">rem</span> <span class="o">=</span> <span class="p">(</span><span class="n">rem</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">BUF_SIZE</span><span class="p">;</span>
+			<span class="n">num</span><span class="o">-</span><span class="o">-</span><span class="p">;</span>
+		<span class="n">pthread_mutex_unlock</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="p">;</span>
+
+		<span class="n">pthread_cond_signal</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">c_prod</span><span class="p">)</span><span class="p">;</span>
+		<span class="n">printf</span> <span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">Consume value %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="p">;</span>  <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span><span class="p">;</span>
+
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></article><section class="article labels"><a class="category" href=/categories/omscs/>OMSCS</a><a class="category" href=/categories/cs6200/>CS6200</a><a class="tag" href=/tags/operating-system/>Operating System</a><a class="tag" href=/tags/thread/>Thread</a><a class="tag" href=/tags/concurrency/>Concurrency</a></section></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/cs6200-week1/"><span class="li iconfont icon-article"></span>CS 6200 Week 1 Notes</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Ryan Ma</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-73966605-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+</body>
+
+</html>

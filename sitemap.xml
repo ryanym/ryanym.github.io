@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
-    <loc>https://ryanym.com/categories/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/concurrency/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/posts/cs6200-week2/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/cs6200/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/categories/omscs/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/operating-system/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/posts/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/tags/thread/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
+    <loc>https://ryanym.com/</loc><lastmod>2020-05-16T00:00:00+00:00</lastmod></url><url>
     <loc>https://ryanym.com/posts/cs6200-week1/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
-    <loc>https://ryanym.com/categories/cs6200/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
-    <loc>https://ryanym.com/categories/omscs/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
-    <loc>https://ryanym.com/tags/operating-system/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/pcb/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
-    <loc>https://ryanym.com/posts/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/process/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
-    <loc>https://ryanym.com/tags/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
-    <loc>https://ryanym.com/</loc><lastmod>2020-05-11T00:00:00+00:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/array/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/binary-tree/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
     <loc>https://ryanym.com/tags/bit-manipulation/</loc><lastmod>2020-03-30T18:07:04-05:00</lastmod></url><url>
