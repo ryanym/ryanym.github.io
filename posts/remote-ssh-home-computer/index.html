@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Cloud is not free, Wakeup and SSH to your home computer remotely&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.8c24852e5f6a6bd910400b8fbb878613fcb4debd54b64e9c0e3309c16ff60dd7c9fb88e29ad2fbefeb14054f849ce8ad.css" integrity="sha384-jCSFLl9qa9kQQAuPu4eGE/y03r1Utk6cDjMJwW/2DdfJ&#43;4jimtL77&#43;sUBU&#43;EnOit"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>Cloud is not free, Wakeup and SSH to your home computer remotely&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.9cb92fcbd3399aceff8fba9449608bf7f45a26e00aea75f0e5bd184f023ca9e14d844a7efefc3e68aa0613112986c902.css" integrity="sha384-nLkvy9M5ms7/j7qUSWCL9/RaJuAK6nXw5b0YTwI8qeFNhEp&#43;/vw&#43;aKoGExEphskC"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Cloud is not free, Wakeup and SSH to your home computer remotely" />
 
 <link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
@@ -10,13 +10,15 @@
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/coursework">Coursework</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
     <h1 class="article title">Cloud is not free, Wakeup and SSH to your home computer remotely</h1><p class="article date">Sunday, March 10, 2019</p></section><article class="article markdown-body"><p><span class="image-container"><span class="link"><img class="img" src="https://cdn-images-1.medium.com/max/1260/1*SNdOlOGAYF6ahI1SG22yVA.jpeg"
         alt="teepublic"/></span></span></p>
-<p>Recently I had to run some <a href="https://medium.com/@kyle.jinhai.li/reinforcement-learning-introduction-to-q-learning-444c951e292c"target="_blank">Q-learning</a> algorithms on my home desktop (running on Ubuntu 18). These workloads, depends on the model and hyper parameters, could take a while to finish. If I’m away from home and still wants to work on this project, my options would be:</p>
+<p>Recently I had to run some <a href="https://medium.com/@kyle.jinhai.li/reinforcement-learning-introduction-to-q-learning-444c951e292c"target="_blank" rel="noopener noreferrer">Q-learning</a>
+ algorithms on my home desktop (running on Ubuntu 18). These workloads, depends on the model and hyper parameters, could take a while to finish. If I’m away from home and still wants to work on this project, my options would be:</p>
 <ul>
 <li>
 <p>Run the algorithms on my Macbook pro and thus starting a fire somewhere</p>
 </li>
 <li>
-<p>Run the algorithms on the cloud, cheapest <a href="https://aws.amazon.com/ec2/pricing/on-demand/"target="_blank">computation optimized instance</a> costs $0.085/hour on AWS</p>
+<p>Run the algorithms on the cloud, cheapest <a href="https://aws.amazon.com/ec2/pricing/on-demand/"target="_blank" rel="noopener noreferrer">computation optimized instance</a>
+ costs $0.085/hour on AWS</p>
 </li>
 <li>
 <p>SSH into my desktop remotely, and continue my workloads, for free (well, plus the electricity cost)</p>
@@ -42,7 +44,8 @@
 <p>Find the temporary public ip assigned by the ISP, <code>dig +short myip.opendns.com @resolver1.opendns.com</code> let’s say <code>1.2.3.4</code> is our public ip</p>
 </li>
 <li>
-<p>Now that we have the public ip, can we ssh to our desktop remotely? Well, not yet, our home devices all share the same public ip, this is called <a href="https://en.wikipedia.org/wiki/Network_address_translation"target="_blank">Network Address Translation</a> (NAT). So we need to explicitly tell our router to forward all incoming traffic of a port to a specific local ip and port, this is called Port Forwarding. In our case we need to tell our router to forward all traffic heading to port 22 of our desktop. All routers should have this functionality and this can be setup on the router admin web ui. We need to add a port forwarding rule so that it forwards source port <code>22</code> to destination, our desktop’s ip, <code>192.168.0.10</code>and destination port <code>22.</code></p>
+<p>Now that we have the public ip, can we ssh to our desktop remotely? Well, not yet, our home devices all share the same public ip, this is called <a href="https://en.wikipedia.org/wiki/Network_address_translation"target="_blank" rel="noopener noreferrer">Network Address Translation</a>
+ (NAT). So we need to explicitly tell our router to forward all incoming traffic of a port to a specific local ip and port, this is called Port Forwarding. In our case we need to tell our router to forward all traffic heading to port 22 of our desktop. All routers should have this functionality and this can be setup on the router admin web ui. We need to add a port forwarding rule so that it forwards source port <code>22</code> to destination, our desktop’s ip, <code>192.168.0.10</code>and destination port <code>22.</code></p>
 </li>
 <li>
 <p>Test ssh, <code>ssh user@1.2.3.4</code></p>
@@ -55,7 +58,8 @@
 PasswordAuthentication no
 </code></pre><ol start="5">
 <li>
-<p>Before we restart sshd and apply the changes, we need to <a href="https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"target="_blank">create a ssh key pair</a> and copy our public key to user’s <code>authorized_keys</code>: <code>ssh-copy-id user@1.2.3.4</code></p>
+<p>Before we restart sshd and apply the changes, we need to <a href="https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"target="_blank" rel="noopener noreferrer">create a ssh key pair</a>
+ and copy our public key to user’s <code>authorized_keys</code>: <code>ssh-copy-id user@1.2.3.4</code></p>
 </li>
 <li>
 <p>Now restart sshd on desktop and test ssh again, this time it should not prompt for password.</p>
@@ -65,7 +69,8 @@ PasswordAuthentication no
 <p>I set my desktop to suspend after 15mins of idle to save electricity. But the problem is that we can’t ssh back to it after it goes to sleep. The router sees the device is offline and stop forwarding anything to that local ip. Luckily, there is a feature called Wakeup On LAN that’s supported by most motherboards.</p>
 <ol>
 <li>
-<p>This feature is usually disabled by default, we need to <a href="https://www.howtogeek.com/70374/how-to-geek-explains-what-is-wake-on-lan-and-how-do-i-enable-it/"target="_blank">enable it in our BIOS</a></p>
+<p>This feature is usually disabled by default, we need to <a href="https://www.howtogeek.com/70374/how-to-geek-explains-what-is-wake-on-lan-and-how-do-i-enable-it/"target="_blank" rel="noopener noreferrer">enable it in our BIOS</a>
+</p>
 </li>
 <li>
 <p>Enable WOL with <code>ethtool</code> in the OS level, <code>sudo ethtool -s eth0 wol</code></p>
@@ -85,7 +90,8 @@ Settings for eth0:
  	Wake-on: g
  	Link detected: yes
 </code></pre><ol start="3">
-<li>Now we need something to send the magic packet, I use <a href="https://github.com/jpoliv/wakeonlan"target="_blank">wakeonlan</a> but there are many alternatives. To send the wake up our desktop, we need the mac address of our desktop network card. This can be found in the output of <code>ifconfig</code> :</li>
+<li>Now we need something to send the magic packet, I use <a href="https://github.com/jpoliv/wakeonlan"target="_blank" rel="noopener noreferrer">wakeonlan</a>
+ but there are many alternatives. To send the wake up our desktop, we need the mac address of our desktop network card. This can be found in the output of <code>ifconfig</code> :</li>
 </ol>
 <pre><code>eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
         inet 192.168.0.10  netmask 255.255.255.0  broadcast 192.168.100.255
@@ -112,7 +118,8 @@ Sending magic packet to 255.255.255.255:9 with e0:d5:5e:29:28:2b
 <p>Running a device with low power consumption 24/7 and use it as a jump host to wake up our desktop</p>
 </li>
 <li>
-<p>Run <a href="https://community.teamviewer.com/t5/Knowledge-Base/How-does-Wake-on-LAN-WOL-with-TeamViewer-work/ta-p/33"target="_blank">Teamviewer WOL</a> if the target computer is connected to the router via a network cable.</p>
+<p>Run <a href="https://community.teamviewer.com/t5/Knowledge-Base/How-does-Wake-on-LAN-WOL-with-TeamViewer-work/ta-p/33"target="_blank" rel="noopener noreferrer">Teamviewer WOL</a>
+ if the target computer is connected to the router via a network cable.</p>
 </li>
 </ul>
 <p>Luckily I have a raspberry pi sitting around, we can follow the same steps above to setup port forwarding and ssh. Note that we already used port 22 for our desktop, we need to run sshd on a different port, so that we can ssh into raspi from external network. To do this, change <code>Port 22</code> to <code>Port 2223</code>in <code>/etc/ssh/sshd_config</code> and restart sshd.</p>
@@ -127,13 +134,14 @@ Sending magic packet to 255.255.255.255:9 with e0:d5:5e:29:28:2b
 </code></pre><p>Nice, desktop is up again! We can now wake up and ssh into our computer remotely.</p>
 <h1 id="future-enhancement">Future Enhancement</h1>
 <p>Our public ip is not permanent, it could be changed when the DHCP lease is renewed. We can add a cron job on our raspi to commit our public ip to a private git repo if ip is changed.</p>
-</article><section class="article labels"><a class="category" href=/categories/setup/>setup</a><a class="tag" href=/tags/ssh/>ssh</a><a class="tag" href=/tags/cloud/>cloud</a></section></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/hadoop-multi-namespaces/"><span class="li iconfont icon-article"></span>Accessing mutiple Hadoop amespaces with native HDFS client</a></p><p><a class="link" href="/posts/producitivity-tools/"><span class="li iconfont icon-article"></span>Producitivity Tools</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+</article><section class="article labels"><a class="category" href=/categories/setup/>setup</a><a class="tag" href=/tags/ssh/>ssh</a><a class="tag" href=/tags/cloud/>cloud</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/hadoop-multi-namespaces/"><span class="iconfont icon-article"></span>Accessing mutiple Hadoop amespaces with native HDFS client</a></p><p><a class="link" href="/posts/producitivity-tools/"><span class="iconfont icon-article"></span>Producitivity Tools</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2020 Ryan Ma</p>
-    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
-        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank">Notepadium</a></p>
-</div></section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
             onload="renderMathInElement(document.body);"></script><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
 <script type="application/javascript">
 var doNotTrack = false;

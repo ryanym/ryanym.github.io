@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Implement LRU Cache&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.8c24852e5f6a6bd910400b8fbb878613fcb4debd54b64e9c0e3309c16ff60dd7c9fb88e29ad2fbefeb14054f849ce8ad.css" integrity="sha384-jCSFLl9qa9kQQAuPu4eGE/y03r1Utk6cDjMJwW/2DdfJ&#43;4jimtL77&#43;sUBU&#43;EnOit"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>Implement LRU Cache&nbsp;&ndash;&nbsp;Untitled Thoughts</title><link rel="stylesheet" href="/css/core.min.9cb92fcbd3399aceff8fba9449608bf7f45a26e00aea75f0e5bd184f023ca9e14d844a7efefc3e68aa0613112986c902.css" integrity="sha384-nLkvy9M5ms7/j7qUSWCL9/RaJuAK6nXw5b0YTwI8qeFNhEp&#43;/vw&#43;aKoGExEphskC"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Implement LRU Cache" />
 
 <link rel="shortcut icon" type="image/x-icon" href="https://ryanym.com/favicon.ico">
 <body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Untitled Thoughts</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/coursework">Coursework</a><a class="nav item" href="/bookshelf/">Bookshelf</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Implement LRU Cache</h1><p class="article date">Thursday, February 27, 2020</p></section><article class="article markdown-body"><p>Problem: <a href="https://leetcode.com/problems/lru-cache/"target="_blank">146. LRU Cache</a></p>
+    <h1 class="article title">Implement LRU Cache</h1><p class="article date">Thursday, February 27, 2020</p></section><article class="article markdown-body"><p>Problem: <a href="https://leetcode.com/problems/lru-cache/"target="_blank" rel="noopener noreferrer">146. LRU Cache</a>
+</p>
 <blockquote>
-<p>Design and implement a data structure for <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU"target="_blank">Least Recently Used (LRU) cache</a>. It should support the following operations: <code>get</code> and <code>put</code>.</p>
+<p>Design and implement a data structure for <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU"target="_blank" rel="noopener noreferrer">Least Recently Used (LRU) cache</a>
+. It should support the following operations: <code>get</code> and <code>put</code>.</p>
 <p><code>get(key)</code> - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.<br>
 <code>put(key, value)</code> - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
 <p>The cache is initialized with a <strong>positive</strong> capacity.</p>
@@ -41,7 +43,8 @@ cache.get(4);       // returns 4
 <p>First thing came to my mind is to use an integer to represent the least used items, with 0 as the most recently used item To keep track of last used rank, we put 0 as least recently used rank for new item and  increment the rank by 1 for the rest of items to increase their ranks. When an item's rank exeeds the capacity, we remove it from the hashmap.</p>
 <p>One obvious mistake in this solution is that we didn't account what to do with get or update operations. And there is no obvious way to recreate the rankings without some kind of sorting which is O(n*log(n)) time.</p>
 <h3 id="attempt-2-succeed">Attempt #2 [Succeed]</h3>
-<p>In the previous attempt we tried to order these hashmap items by creating an additional attribute to the item but couldn't find an easy way to order them by access time.  What if instead of creating additional attributes, we could find a data structure that both supports ordering, and map-like key value lookup. After some <a href="https://stackoverflow.com/a/663388"target="_blank">googling</a> we found that <code>LinkedHashMap</code> and  <code>SortedMap</code> are good candidates to solve our problem.</p>
+<p>In the previous attempt we tried to order these hashmap items by creating an additional attribute to the item but couldn't find an easy way to order them by access time.  What if instead of creating additional attributes, we could find a data structure that both supports ordering, and map-like key value lookup. After some <a href="https://stackoverflow.com/a/663388"target="_blank" rel="noopener noreferrer">googling</a>
+ we found that <code>LinkedHashMap</code> and  <code>SortedMap</code> are good candidates to solve our problem.</p>
 <h4 id="which-one-should-we-use">Which one should we use?</h4>
 <p>For <code>SortedMap</code> we still need to create an additional attribute to represent the least recently used rank, on top of that, each get and put now needs O(log(n)) time to complete.</p>
 <p><code>LinkedHashMap</code> maintains a natural ordering as items are added to the map, and, it has a nice method called <code>removeEldestEnrty</code> to help us evict the least used items. Let's take a deeper look at this class:</p>
@@ -291,13 +294,14 @@ IllegalArgumentException - if the initial capacity is negative or the load facto
         <span class="o">}</span>
     <span class="o">}</span>
 </code></pre></div><p>Finally we have implemented a LRU cache that performs in O(1) time and uses O(n) space where n is the capacity of the cache. By breaking down the requirements, we successfully improved our O(n) implementation to O(1) and we even implemented a doubly linkedlist along the way.</p>
-</article><section class="article labels"><a class="category" href=/categories/leetcode/>leetcode</a><a class="category" href=/categories/interview-prep/>interview prep</a><a class="tag" href=/tags/linkedlist/>linkedlist</a><a class="tag" href=/tags/hashmap/>hashmap</a></section></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/leetcode-binary-tree/"><span class="li iconfont icon-article"></span>Binary Tree Interview Questions</a></p><p><a class="link" href="/posts/hadoop-multi-namespaces/"><span class="li iconfont icon-article"></span>Accessing mutiple Hadoop amespaces with native HDFS client</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+</article><section class="article labels"><a class="category" href=/categories/leetcode/>leetcode</a><a class="category" href=/categories/interview-prep/>interview prep</a><a class="tag" href=/tags/linkedlist/>linkedlist</a><a class="tag" href=/tags/hashmap/>hashmap</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/leetcode-binary-tree/"><span class="iconfont icon-article"></span>Binary Tree Interview Questions</a></p><p><a class="link" href="/posts/hadoop-multi-namespaces/"><span class="iconfont icon-article"></span>Accessing mutiple Hadoop amespaces with native HDFS client</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2020 Ryan Ma</p>
-    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
-        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank">Notepadium</a></p>
-</div></section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/&#43;DiW/UqRcLbRjq" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l&#43;B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd&#43;qj&#43;o24G5ZU2zJz" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
             onload="renderMathInElement(document.body);"></script><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script>
 <script type="application/javascript">
 var doNotTrack = false;
